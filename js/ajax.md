@@ -13,14 +13,25 @@ function sendAjax (config) {
         config.success(JSON.parse(request.response));
       } else {
         // 失败，根据响应码判断失败原因:
-        config.error(JSON.parse(request.response));
+        config.error(request.response);
       }
     } else {
       // HTTP请求还在继续...
     }
   }
-  request.open(config.type, config.url);
 
+  if (config.type === 'GET') {
+    var url = config.url + '?'
+    for (prop in config.data) {
+      url += prop + '=' + config.data[prop] + '&'
+    }
+    url = url.replace(/&$/, '');
+    request.open(config.type, url);
+  } else {
+    request.open(config.type, config.url);
+  }
+
+  // 必须在 open 之后，send 之前
   for (key in config.headers) {
     request.setRequestHeader(key, config.headers[key])
   }
@@ -48,10 +59,10 @@ sendAjax({
     "tokenId":      'aaaaaa',
   },
   success: function (resp) {
-    console.log('ok')
+    console.log('ok', resp)
   },
   error: function (err) {
-    console.log('fail')
+    console.log('fail', err)
   }
 })
 ```
