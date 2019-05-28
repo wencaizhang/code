@@ -27,15 +27,17 @@ var timestamp = new Date().getTime();
 第一种获取的时间戳是精确到秒，第二种和第三种是获取的时间戳精确到毫秒。
 
 
-## 获取当前时间信息
+## 根据时间戳获取对应时间信息
 
 ```js
 /**
- * 获取当前时间信息：年月日时分秒
+ * 根据时间戳，获取对应时间信息：年月日时分秒
+ * @param {Number} timestamp [时间戳]
+ * 如果时间戳为空，则按当前时间计算
  */
-export function getCurrTime() {
-  const date = new Date();
-  const currTime = {
+export function getTimeInfo(timestamp) {
+  const date = timestamp ? new Date(timestamp) : new Date();
+  const timeInfo = {
     YYYY: date.getFullYear(),
     MM: date.getMonth() + 1,
     DD: date.getDate(),
@@ -43,7 +45,7 @@ export function getCurrTime() {
     mm: date.getMinutes(),
     ss: date.getSeconds()
   };
-  return currTime;
+  return timeInfo;
 }
 ```
 
