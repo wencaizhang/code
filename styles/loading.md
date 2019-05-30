@@ -1,5 +1,7 @@
 # 按钮秒变 loading
 
+<loading />
+
 ```css
 /* 按钮loading */
 .spin-loading {

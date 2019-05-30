@@ -1,8 +1,16 @@
-# 点击页面出现富强、民主这类文字动画效果
+# 点击页面出现文字动画效果
 
-代码来源：[小tips: 点击页面出现富强、民主这类文字动画效果](https://www.zhangxinxu.com/wordpress/2018/05/click-page-popup-text-tips/)
+代码参考：[小tips: 点击页面出现富强、民主这类文字动画效果](https://www.zhangxinxu.com/wordpress/2018/05/click-page-popup-text-tips/)
 
-效果不多说，点击本页面即可看到，使用时将下面 CSS 代码和 JS 代码分别拷贝到合适位置即可。
+## 效果展示
+
+点击下面区域即可看到效果
+
+<fnTextPopup />
+
+## 代码
+
+使用时将下面 CSS 代码和 JS 代码分别拷贝到合适位置即可。
 
 ```css
 .text-popup {
