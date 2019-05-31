@@ -19,27 +19,27 @@ function typeOf(obj) {
 }
 // deepCopy
 function deepCopy(data) {
-  const t = typeOf(data);
-  let o;
+  const type = typeOf(data);
+  let obj;
 
-  if (t === "array") {
-    o = [];
-  } else if (t === "object") {
-    o = {};
+  if (type === "array") {
+    obj = [];
+  } else if (type === "object") {
+    obj = {};
   } else {
     return data;
   }
 
-  if (t === "array") {
+  if (type === "array") {
     for (let i = 0; i < data.length; i++) {
-      o.push(deepCopy(data[i]));
+      obj.push(deepCopy(data[i]));
     }
-  } else if (t === "object") {
+  } else if (type === "object") {
     for (let i in data) {
-      o[i] = deepCopy(data[i]);
+      obj[i] = deepCopy(data[i]);
     }
   }
-  return o;
+  return obj;
 }
 
 export { deepCopy };
