@@ -51,7 +51,9 @@ export function getTimeInfo(timestamp) {
 
 ## 将正常时间格式转化为时间戳
 
-```js
+`time.replace(/-/g, '/')` 是为了避免 iPone 的兼容问题。
+
+```js{9}
 /**
  * 将正常时间格式转化为时间戳
  * 如果不传入时间参数，默认按照当前时间计算
@@ -60,7 +62,7 @@ export function getTimeInfo(timestamp) {
 export function getTimestamp(time) {
   // 没有对 time 做合法性校验
   // 假设传入的 time 都是合法的时间格式：2019-04-01 13:10:10
-  const date = time ? new Date(time) : new Date();
+  const date = time ? new Date(time.replace(/-/g, '/')) : new Date();
   const timestamp = date.getTime(); // 13 位数字，精确到毫秒
   return timestamp;
 }
@@ -75,10 +77,9 @@ export function getTimestamp(time) {
  * @param {String} formats 最终返回的时间格式
  * YYYY|MM|DD|hh|mm|ss，分别是年/月/日/时/分/秒，可自由组合成想要的时间格式
  */
-export function dateFormat(timestamp, formats) {
-  formats = formats || "YYYY-MM-DD hh:mm:ss";
+export function dateFormat(timestamp, formats = 'YYYY-MM-DD hh:mm:ss') {
   const date = timestamp ? new Date(timestamp) : new Date();
-  const obj = {
+  const timeInfo = {
     YYYY: date.getFullYear(),
     MM: date.getMonth() + 1,
     DD: date.getDate(),
@@ -87,12 +88,10 @@ export function dateFormat(timestamp, formats) {
     ss: date.getSeconds(),
   };
 
-  Object.keys(obj).forEach(key => {
-    obj[key] = String(obj[key]).padStart(2, 0)
+  Object.keys(timeInfo).forEach(key => {
+    timeInfo[key] = String(timeInfo[key]).padStart(2, 0)
   })
-  return formats.replace(/YYYY|MM|DD|hh|mm|ss/gi, matches => {
-    return obj[matches];
-  });
+  return formats.replace(/YYYY|MM|DD|hh|mm|ss/gi, matches => timeInfo[matches]);
 }
 ```
 
@@ -123,10 +122,10 @@ String.prototype.padStart = function (targetLength, padString) {
  */
 export function getWeekDay(timestamp) {
   // 一周的第一天是周日
-  const obj = ["日", "一", "二", "三", "四", "五", "六"];
+  const map = ["日", "一", "二", "三", "四", "五", "六"];
   const date = timestamp ? new Date(timestamp) : new Date();
   const index = date.getDay();
-  return "星期" + obj[index];
+  return "星期" + map[index];
 }
 ```
 
