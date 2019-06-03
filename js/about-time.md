@@ -51,8 +51,6 @@ export function getTimeInfo(timestamp) {
 
 ## 将正常时间格式转化为时间戳
 
-`time.replace(/-/g, '/')` 是为了避免 iPone 的兼容问题。
-
 ```js{9}
 /**
  * 将正常时间格式转化为时间戳
@@ -67,6 +65,21 @@ export function getTimestamp(time) {
   return timestamp;
 }
 ```
+
+::: danger 注意
+在部分苹果机型（如苹果X）上，下面代码会得到 NaN
+```js
+const time = '2019-04-01 13:10:10';
+const date = new Date(time); // -> NaN
+```
+
+解决办法是把横杠 `-` 替换成斜线 `/`：
+```js
+const time = '2019-04-01 13:10:10';
+const date = new Date(time.replace(/-/g, '/'));
+// -> Mon Apr 01 2019 13:10:10 GMT+0800 (中国标准时间)
+```
+:::
 
 ## 将时间戳转化为正常时间格式
 
